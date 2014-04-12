@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            Shanbay message assistant
 // @namespace       http://userscripts.org/scripts/show/183146
-// @description     Shanbay message assistant
+// @description     扇贝网短信助手
 // @version         0.2.0
 // @author          mozillazg
 // @updateURL       https://userscripts.org/scripts/source/183146.meta.js
