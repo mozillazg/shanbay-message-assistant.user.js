@@ -26,15 +26,6 @@ function htmlSendMsgLink (username) {
             '" class="no-hover" title="发短信">发短信</a>';
 };
 
-// 用户空间增加“发短信”链接
-function addSendLinkOnHome () {
-  var username = $("#profile .profile h2 small").text();
-  username = username.replace('(', '').replace(')', '').trim();
-  var sendLink = htmlSendMsgLink(username);
-  // 在头像后增加“发短信”链接
-  $("#profile img").parent().append(sendLink)
-};
-
 // 打卡记录页面
 function addSendLinkOnCheckin (username) {
   var sendLink = htmlSendMsgLink(username);
@@ -65,10 +56,7 @@ function newMsgNotify () {
 // run
 (function () {
   var currentLink = $(location).attr('href');
-  // 用户空间
-  if (currentLink.match(/\/bdc\/review\/progress\/\d+/) || currentLink.match(/\/user\/list\/\d+/)) {
-    addSendLinkOnHome();
-  } else if (currentLink.match(/\/checkin\/user\/\d+/)) {
+  if (currentLink.match(/\/checkin\/user\/\d+/)) {
     // 打卡列表
     var url = $("#checkin .avatar a").attr('href');
     if (url) {
