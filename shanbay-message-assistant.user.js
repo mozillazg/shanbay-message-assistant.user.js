@@ -22,8 +22,8 @@ function userInfo (url, callback) {
 };
 
 function htmlSendMsgLink (username) {
-    return '<br /><a href="/message/compose/' + username +
-           '/" class="no-hover" title="发短信">发短信</a>';
+    return '<br /><a href="/message/compose/?r=' + username +
+            '" class="no-hover" title="发短信">发短信</a>';
 };
 
 // 用户空间增加“发短信”链接
