@@ -2,7 +2,7 @@
 // @name            Shanbay message assistant
 // @namespace       http://userscripts.org/scripts/show/183146
 // @description     Shanbay message assistant
-// @version         0.1.0
+// @version         0.2.0
 // @author          mozillazg
 // @updateURL       https://userscripts.org/scripts/source/183146.meta.js
 // @downloadURL     https://userscripts.org/scripts/source/183146.user.js
@@ -22,7 +22,7 @@ function userInfo (url, callback) {
 };
 
 function htmlSendMsgLink (username) {
-    return '<br /><a href="/17mail/compose/' + username +
+    return '<br /><a href="/message/compose/' + username +
            '/" class="no-hover" title="发短信">发短信</a>';
 };
 
@@ -49,7 +49,7 @@ function newMsgNotify () {
   var title = $("title");
   var sourceTitle = title.html().replace(/\[\d+条未读短信\] \| /, '');
   $.ajax({
-    url: "http://www.shanbay.com/17mail/inbox/",
+    url: "http://www.shanbay.com/message/",
     dataType: "html",
     success: function(data) {
       var number = $(".messages tr td strong", data).length;
