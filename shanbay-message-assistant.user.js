@@ -9,25 +9,14 @@
 // @include         http://www.shanbay.com/*
 // ==/UserScript==
 
-function userInfo (url, callback) {
-  $.ajax({
-    url: url,
-    dataType: "html",
-    success: function(data) {
-      username = $("#profile .profile h2 small", data).text();
-      username = username.replace('(', '').replace(')', '').trim();
-      callback(username);
-    }
-  });
-};
-
 function htmlSendMsgLink (username) {
     return '<br /><a href="/message/compose/?r=' + username +
             '" class="no-hover" title="发短信">发短信</a>';
 };
 
 // 打卡记录页面
-function addSendLinkOnCheckin (username) {
+function addSendLinkOnCheckin () {
+  var username = $('h2').text().split(' ')[0];
   var sendLink = htmlSendMsgLink(username);
   var checkins = $("#checkin .checkin");
   $.each(checkins, function (index, value) {
@@ -58,10 +47,7 @@ function newMsgNotify () {
   var currentLink = $(location).attr('href');
   if (currentLink.match(/\/checkin\/user\/\d+/)) {
     // 打卡列表
-    var url = $("#checkin .avatar a").attr('href');
-    if (url) {
-      userInfo(url, addSendLinkOnCheckin);
-    }
+    addSendLinkOnCheckin();
   }
   newMsgNotify();
   window.setInterval(function() {
