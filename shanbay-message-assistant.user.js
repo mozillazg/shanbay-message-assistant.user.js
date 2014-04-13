@@ -27,26 +27,26 @@ function addSendLinkOnCheckin () {
 // 未读短信通知
 function newMsgNotify () {
   var title = $("title");
-  var sourceTitle = title.html().replace(/\[你有 \d+ 条未读短信\] \| /, '');
+  var sourceTitle = title.html().replace(/\[你有 \d+\+ 条未读短信\] \| /, '');
   $.ajax({
-    url: "http://www.shanbay.com/api/v1/notification/",
+    url: "http://www.shanbay.com/api/v1/message/",
     dataType: "json",
     success: function(data) {
-      var has_msg = false;
       if (data.status_code != 0) {
         return;
       }
 
-      var data = data.data;
-      for (var i=0; i<data.length; i++) {
-        var d = data[i];
-        if (d.notification_name === 'message.receive_message') {
-          title.html('[' + d.content + '] | ' + sourceTitle);
-          has_msg = true;
-          break;
+      var messages = data.data.messages;
+      var count = 0;
+      for (var i=0; i<messages.length; i++) {
+        var d = messages[i];
+        if (d.is_new) {
+          count ++;
         }
       }
-      if (!has_msg) {
+      if (count > 0) {
+        title.html('[你有 ' + count + '+ 条未读短信] | ' + sourceTitle);
+      } else {
         title.html(sourceTitle);
       }
     }
