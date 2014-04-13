@@ -24,18 +24,29 @@ function addSendLinkOnCheckin () {
   });
 }
 
-// 新消息通知
+// 未读短信通知
 function newMsgNotify () {
   var title = $("title");
-  var sourceTitle = title.html().replace(/\[\d+条未读短信\] \| /, '');
+  var sourceTitle = title.html().replace(/\[你有 \d+ 条未读短信\] \| /, '');
   $.ajax({
-    url: "http://www.shanbay.com/message/",
-    dataType: "html",
+    url: "http://www.shanbay.com/api/v1/notification/",
+    dataType: "json",
     success: function(data) {
-      var number = $(".messages tr td strong", data).length;
-      if (number > 0) {
-        title.html('[' + number + '条未读短信] | ' + sourceTitle);
-      } else {
+      var has_msg = false;
+      if (data.status_code != 0) {
+        return;
+      }
+
+      var data = data.data;
+      for (var i=0; i<data.length; i++) {
+        var d = data[i];
+        if (d.notification_name === 'message.receive_message') {
+          title.html('[' + d.content + '] | ' + sourceTitle);
+          has_msg = true;
+          break;
+        }
+      }
+      if (!has_msg) {
         title.html(sourceTitle);
       }
     }
